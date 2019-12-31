@@ -10,16 +10,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dolan.aiportalberita.BaseApp
 import com.dolan.aiportalberita.R
 import com.dolan.aiportalberita.viewmodel.BusinessListViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_byussines.*
 import javax.inject.Inject
 
 class ByussinesFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
+    private val businessAdapter = BusinessAdapter()
 
     private lateinit var bussinesListViewModel: BusinessListViewModel
 
@@ -43,11 +47,18 @@ class ByussinesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bussinesListViewModel.getBusinesList()
         observeNews()
+        rv_main.apply {
+            adapter = businessAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun observeNews() {
         bussinesListViewModel.getBusinessLiveList().observe(this, Observer {
-            Log.d("DATANEWSKUUUU", "$it")
+            it?.let {
+                businessAdapter.setListBusiness(it)
+            }
+
         })
     }
 }

@@ -12,4 +12,11 @@ class NewsUseCase(private val repository: BusinesRepository) {
         .map {
             it.articles
         }
+
+    fun getTechnologyRepo() = repository.getTechnology()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .map {
+            it.articles
+        }
 }

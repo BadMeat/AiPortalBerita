@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/byussinesFragment"
-        android:name="com.dolan.aiportalberita.ui.ByussinesFragment"
+        android:name="com.dolan.aiportalberita.ui.BusinessFragment"
         android:label="Business News"
         tools:layout="@layout/fragment_byussines">
         <action

@@ -1,7 +1,7 @@
 package com.dolan.aiportalberita.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.dolan.aiportalberita.di.domain.NewsUseCase
+import com.dolan.aiportalberita.domain.NewsUseCase
 import com.dolan.aiportalberita.model.ArticlesItem
 import javax.inject.Inject
 

@@ -1,7 +1,7 @@
 package com.dolan.aiportalberita.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.dolan.aiportalberita.di.domain.NewsUseCase
+import com.dolan.aiportalberita.domain.NewsUseCase
 import com.dolan.aiportalberita.model.ArticlesItem
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ class BusinessListViewModel @Inject constructor(private val useCase: NewsUseCase
 
     private val listBusines = MutableLiveData<List<ArticlesItem>>()
 
-    fun getBusinesList() {
+    fun getBusinessList() {
         if (listBusines.value != null) {
             return
         }

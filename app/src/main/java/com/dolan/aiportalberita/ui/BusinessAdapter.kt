@@ -2,6 +2,8 @@ package com.dolan.aiportalberita.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dolan.aiportalberita.R
@@ -11,14 +13,46 @@ import com.dolan.aiportalberita.model.ArticlesItem
 /**
  * Created by Bencoleng on 30/12/2019.
  */
-class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>() {
+class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>(), Filterable {
 
     private val listBusiness = mutableListOf<ArticlesItem>()
+    private var listNewsFilter = listBusiness
 
     fun setListBusiness(list: List<ArticlesItem>) {
         listBusiness.clear()
         listBusiness.addAll(list)
         notifyDataSetChanged()
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(p0: CharSequence?): FilterResults {
+                val input = p0.toString()
+                listNewsFilter = if (input.isEmpty()) {
+                    listBusiness
+                } else {
+                    val result = mutableListOf<ArticlesItem>()
+                    for (data: ArticlesItem in listBusiness) {
+                        data.title?.let {
+                            if (it.contains(input, true)) {
+                                result.add(data)
+                            }
+                        }
+                    }
+                    result
+                }
+                val resultFilter = FilterResults()
+                resultFilter.values = listNewsFilter
+                return resultFilter
+            }
+
+            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+                p1?.let {
+                    listNewsFilter = it.values as MutableList<ArticlesItem>
+                    notifyDataSetChanged()
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -32,10 +66,10 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>() {
         return Holder(view)
     }
 
-    override fun getItemCount() = listBusiness.size
+    override fun getItemCount() = listNewsFilter.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.view.news = listBusiness[position]
+        holder.view.news = listNewsFilter[position]
     }
 
     class Holder(var view: BusinessItemBinding) : RecyclerView.ViewHolder(view.root)

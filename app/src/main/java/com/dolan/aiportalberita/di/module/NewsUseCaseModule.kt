@@ -1,8 +1,8 @@
 package com.dolan.aiportalberita.di.module
 
-import com.dolan.aiportalberita.di.domain.NewsUseCase
+import com.dolan.aiportalberita.domain.NewsUseCase
 import com.dolan.aiportalberita.di.scope.AppScope
-import com.dolan.aiportalberita.repository.BusinesRepository
+import com.dolan.aiportalberita.repository.BusinessRepository
 import dagger.Module
 import dagger.Provides
 
@@ -11,7 +11,7 @@ class NewsUseCaseModule {
 
     @AppScope
     @Provides
-    fun provideFeedUseCase(repository: BusinesRepository) =
+    fun provideFeedUseCase(repository: BusinessRepository) =
         NewsUseCase(repository)
 
 }

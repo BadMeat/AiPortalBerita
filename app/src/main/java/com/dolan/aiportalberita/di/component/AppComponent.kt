@@ -15,5 +15,6 @@ import dagger.Component
 )
 interface AppComponent {
     fun newBussinesListComponent(): BussinesListComponent
+    fun newTechnologyComponent(): TechnologyComponent
 
 }

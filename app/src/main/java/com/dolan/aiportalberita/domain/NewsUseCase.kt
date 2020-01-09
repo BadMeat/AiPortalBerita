@@ -1,12 +1,12 @@
-package com.dolan.aiportalberita.di.domain
+package com.dolan.aiportalberita.domain
 
-import com.dolan.aiportalberita.repository.BusinesRepository
+import com.dolan.aiportalberita.repository.BusinessRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class NewsUseCase(private val repository: BusinesRepository) {
+class NewsUseCase(private val repository: BusinessRepository) {
 
-    fun getBusinessRepo() = repository.getBusines()
+    fun getBusinessRepo() = repository.getBusiness()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .map {

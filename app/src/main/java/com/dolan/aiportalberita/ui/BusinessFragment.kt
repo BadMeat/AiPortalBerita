@@ -3,6 +3,7 @@ package com.dolan.aiportalberita.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -14,8 +15,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dolan.aiportalberita.BaseApp
 import com.dolan.aiportalberita.R
+import com.dolan.aiportalberita.invisible
 import com.dolan.aiportalberita.viewmodel.BusinessListViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
+import com.dolan.aiportalberita.visible
 import kotlinx.android.synthetic.main.fragment_byussines.*
 import javax.inject.Inject
 
@@ -56,20 +59,41 @@ class BusinessFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         businessListViewModel.getBusinessList()
-        observeNews()
+
         rv_main.apply {
             adapter = businessAdapter
             layoutManager = LinearLayoutManager(context)
         }
+
+        rf_main.setOnRefreshListener {
+            progress_bar.visible()
+            rv_main.invisible()
+            rf_main.isRefreshing = false
+            businessListViewModel.getBusinessList()
+        }
+
+        observeNews()
     }
 
     private fun observeNews() {
         businessListViewModel.getBusinessLiveList().observe(this, Observer {
             it?.let {
+                rv_main.visible()
                 businessAdapter.setListBusiness(it)
             }
-
+        })
+        businessListViewModel.getLoading().observe(this, Observer { isLoading ->
+            isLoading.let {
+                Log.d("ISLOADING", "$it")
+                progress_bar.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
+                    rv_main.invisible()
+                } else {
+                    rv_main.visible()
+                }
+            }
         })
     }
 

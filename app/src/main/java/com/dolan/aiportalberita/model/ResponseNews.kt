@@ -2,7 +2,7 @@ package com.dolan.aiportalberita.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseBusines(
+data class ResponseNews(
 
 	@field:SerializedName("totalResults")
 	val totalResults: Int? = null,

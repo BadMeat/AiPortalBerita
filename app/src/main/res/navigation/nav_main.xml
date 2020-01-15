@@ -3,20 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/byussinesFragment">
+    app:startDestination="@id/berandaFragment">
 
     <fragment
         android:id="@+id/byussinesFragment"
         android:name="com.dolan.aiportalberita.ui.BusinessFragment"
         android:label="Business News"
-        tools:layout="@layout/fragment_byussines">
-        <action
-            android:id="@+id/action_technology"
-            app:destination="@id/technologyFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_byussines"/>
     <fragment
         android:id="@+id/technologyFragment"
         android:name="com.dolan.aiportalberita.ui.TechnologyFragment"
         android:label="Technology News"
         tools:layout="@layout/fragment_technology" />
+    <fragment
+        android:id="@+id/berandaFragment"
+        android:name="com.dolan.aiportalberita.ui.BerandaFragment"
+        android:label="fragment_beranda"
+        tools:layout="@layout/fragment_beranda" />
 </navigation>

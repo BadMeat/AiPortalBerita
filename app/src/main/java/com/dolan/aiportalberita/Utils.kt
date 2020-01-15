@@ -1,6 +1,7 @@
 package com.dolan.aiportalberita
 
 import android.content.Context
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -33,4 +34,12 @@ fun ImageView.loadImage(url: String?, progressDrawable: CircularProgressDrawable
 @BindingAdapter("android:imageUrl")
 fun loadImage(view: ImageView, url: String?) {
     view.loadImage(url, getProgressDrawable(view.context))
+}
+
+fun View.visible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.invisible() {
+    this.visibility = View.GONE
 }

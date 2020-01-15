@@ -49,6 +49,7 @@ class TechnologyFragment : Fragment(), SearchView.OnQueryTextListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_technology, container, false)
     }
 

@@ -9,13 +9,15 @@ class BusinessListViewModel @Inject constructor(private val useCase: NewsUseCase
     BaseViewModel() {
 
     private val listBusines = MutableLiveData<List<ArticlesItem>>()
+    private val isLoading = MutableLiveData<Boolean>()
 
     fun getBusinessList() {
-        if (listBusines.value != null) {
-            return
-        }
+        isLoading.value = true
 
         val disposable = useCase.getBusinessRepo()
+            .doFinally {
+                isLoading.value = false
+            }
             .subscribe {
                 it?.let {
                     listBusines.value = it
@@ -26,4 +28,5 @@ class BusinessListViewModel @Inject constructor(private val useCase: NewsUseCase
     }
 
     fun getBusinessLiveList() = listBusines
+    fun getLoading() = isLoading
 }

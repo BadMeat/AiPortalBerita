@@ -6,6 +6,7 @@ import com.dolan.aiportalberita.di.component.DaggerAppComponent
 import com.dolan.aiportalberita.di.module.DatabaseModule
 import com.dolan.aiportalberita.di.module.NewsRepositoryModule
 import com.dolan.aiportalberita.di.module.NewsUseCaseModule
+import com.dolan.aiportalberita.di.module.SharedPreferencesModule
 import com.dolan.aiportalberita.network.NetworkModule
 
 class BaseApp : Application() {
@@ -22,5 +23,6 @@ class BaseApp : Application() {
             .newsRepositoryModule(NewsRepositoryModule())
             .newsUseCaseModule(NewsUseCaseModule())
             .databaseModule(DatabaseModule(this))
+            .sharedPreferencesModule(SharedPreferencesModule(this))
             .build()
 }

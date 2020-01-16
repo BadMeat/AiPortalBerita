@@ -55,7 +55,7 @@ class BerandaFragment : Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        berandaViewModel.getBerandaNewsRemote()
+        berandaViewModel.refresh()
         initObserver()
         context?.let {
             berandaViewPager = BerandaViewPagger(it)
@@ -71,7 +71,7 @@ class BerandaFragment : Fragment() {
 
         rf_main.setOnRefreshListener {
             rf_main.isRefreshing = false
-            berandaViewModel.getBerandaNewsRemote()
+            berandaViewModel.refresh()
             rv_main.invisible()
             progress_bar.visible()
         }

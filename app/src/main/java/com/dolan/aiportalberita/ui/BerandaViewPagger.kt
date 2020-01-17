@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.dolan.aiportalberita.R
@@ -14,11 +15,11 @@ import com.dolan.aiportalberita.model.ArticlesItem
 class BerandaViewPagger(private val context: Context) : PagerAdapter() {
 
     lateinit var layoutInflater: LayoutInflater
-    val imageUrl = mutableListOf<ArticlesItem>()
+    val articleItem = mutableListOf<ArticlesItem>()
 
     fun setImage(url: List<ArticlesItem>) {
-        imageUrl.clear()
-        imageUrl.addAll(url)
+        articleItem.clear()
+        articleItem.addAll(url)
         notifyDataSetChanged()
     }
 
@@ -26,13 +27,15 @@ class BerandaViewPagger(private val context: Context) : PagerAdapter() {
         return view === (`object` as ConstraintLayout)
     }
 
-    override fun getCount() = imageUrl.size
+    override fun getCount() = articleItem.size
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = layoutInflater.inflate(R.layout.beranda_pagger_layout, container, false)
         val img = view.findViewById<ImageView>(R.id.img_beranda)
-        loadImage(img, imageUrl[position].urlToImage)
+        val txt = view.findViewById<TextView>(R.id.txt_title)
+        loadImage(img, articleItem[position].urlToImage)
+        txt.text = articleItem[position].title
         container.addView(view)
         return view
     }

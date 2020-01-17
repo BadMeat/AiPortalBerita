@@ -1,6 +1,8 @@
 package com.dolan.aiportalberita.ui
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -9,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dolan.aiportalberita.R
 import com.dolan.aiportalberita.databinding.BusinessItemBinding
 import com.dolan.aiportalberita.model.ArticlesItem
+import kotlinx.android.synthetic.main.business_item.view.*
 
 /**
  * Created by Bencoleng on 30/12/2019.
  */
-class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>(), Filterable {
+class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>(), Filterable,
+    NewsDetailListener {
 
     private val listBusiness = mutableListOf<ArticlesItem>()
     private var listNewsFilter = listBusiness
@@ -70,6 +74,11 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>(), Filterab
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.view.news = listNewsFilter[position]
+        holder.view.listener = this
+    }
+
+    override fun onClick(view: View) {
+        Log.d("CLICK", "OKE CLICKKKKEED " + view.txt_title.text.toString())
     }
 
     class Holder(var view: BusinessItemBinding) : RecyclerView.ViewHolder(view.root)

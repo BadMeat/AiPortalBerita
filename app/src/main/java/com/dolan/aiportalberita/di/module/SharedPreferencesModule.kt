@@ -9,24 +9,6 @@ import dagger.Provides
 @Module
 class SharedPreferencesModule(val context: Context) {
 
-//    private var pref: SharedPreferences? = null
-//
-//    private fun buildHelper(context: Context): SharedPreferencesHelper {
-//        pref = PreferenceManager.getDefaultSharedPreferences(context)
-//        return SharedPreferencesHelper(context)
-//    }
-//
-//    @Volatile
-//    private var instance: SharedPreferencesHelper? = null
-//
-//    @AppScope
-//    @Provides
-//    fun provideHelper(): SharedPreferencesHelper = instance ?: synchronized(Any()) {
-//        instance ?: buildHelper(context).also {
-//            instance = it
-//        }
-//    }
-
     @AppScope
     @Provides
     fun providePreferences() = SharedPreferencesHelper(context.applicationContext)

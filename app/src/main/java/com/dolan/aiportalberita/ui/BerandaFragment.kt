@@ -7,7 +7,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,6 +18,8 @@ import com.dolan.aiportalberita.viewmodel.BerandaViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
 import com.dolan.aiportalberita.visible
 import kotlinx.android.synthetic.main.fragment_beranda.*
+import kotlinx.android.synthetic.main.fragment_beranda.progress_bar
+import kotlinx.android.synthetic.main.fragment_beranda.rv_main
 import java.util.*
 import javax.inject.Inject
 
@@ -53,7 +54,7 @@ class BerandaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+//        (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
         berandaViewModel.refresh()
         initObserver()
@@ -69,12 +70,12 @@ class BerandaFragment : Fragment() {
             adapter = berandaAdapter
         }
 
-        rf_main.setOnRefreshListener {
-            rf_main.isRefreshing = false
-            berandaViewModel.refresh()
-            rv_main.invisible()
-            progress_bar.visible()
-        }
+//        rf_main.setOnRefreshListener {
+//            rf_main.isRefreshing = false
+//            berandaViewModel.refresh()
+//            rv_main.invisible()
+//            progress_bar.visible()
+//        }
 
     }
 
@@ -82,7 +83,7 @@ class BerandaFragment : Fragment() {
         runnable = Runnable {
             view_pagger?.let {
                 var i = it.currentItem
-                if (i == berandaViewPager.imageUrl.size - 1) {
+                if (i == berandaViewPager.articleItem.size - 1) {
                     i = 0
                 } else {
                     i++

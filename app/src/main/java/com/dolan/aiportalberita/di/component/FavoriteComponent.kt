@@ -1,18 +1,20 @@
 package com.dolan.aiportalberita.di.component
 
-import com.dolan.aiportalberita.di.module.BerandaViewModule
+import com.dolan.aiportalberita.di.module.FavoriteViewModule
 import com.dolan.aiportalberita.di.module.ViewModelFactoryModule
 import com.dolan.aiportalberita.di.scope.FragmentScope
-import com.dolan.aiportalberita.ui.BerandaFragment
+import com.dolan.aiportalberita.ui.FavoriteFragment
 import dagger.Subcomponent
 
 @FragmentScope
 @Subcomponent(
     modules = [
         ViewModelFactoryModule::class,
-        BerandaViewModule::class]
+        FavoriteViewModule::class
+    ]
 )
-interface BerandaComponent {
+interface FavoriteComponent {
 
-    fun inject(fragment: BerandaFragment)
+    fun inject(favoriteFragment: FavoriteFragment)
+
 }

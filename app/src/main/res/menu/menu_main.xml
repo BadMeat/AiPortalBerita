@@ -17,5 +17,10 @@
         android:icon="@drawable/ic_computer"
         android:title="@string/technology"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/favoriteFragment"
+        android:icon="@drawable/ic_broken_image"
+        android:title="@string/favorite"
+        app:showAsAction="ifRoom" />
 
 </menu>

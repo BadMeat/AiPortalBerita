@@ -21,5 +21,5 @@ interface AppComponent {
     fun newBussinesListComponent(): BussinesListComponent
     fun newTechnologyComponent(): TechnologyComponent
     fun newBerandaComponent(): BerandaComponent
-
+    fun newFavoriteComponent(): FavoriteComponent
 }

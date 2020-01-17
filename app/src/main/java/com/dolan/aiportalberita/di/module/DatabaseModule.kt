@@ -12,8 +12,8 @@ class DatabaseModule(val context: Context) {
 
     private val dbName = "favorite.db"
 
-    @Provides
     @AppScope
+    @Provides
     fun provideDataBase(): AppDatabase {
         return Room.databaseBuilder(
             context, AppDatabase::class.java,

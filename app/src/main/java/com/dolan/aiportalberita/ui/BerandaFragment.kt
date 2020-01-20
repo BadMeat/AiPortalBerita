@@ -54,7 +54,9 @@ class BerandaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).showNavigation()
+        val mainActivity = (activity as MainActivity)
+        mainActivity.showNavigation()
+        mainActivity.hideToolbar()
 
         berandaViewModel.refresh()
         initObserver()
@@ -74,14 +76,6 @@ class BerandaFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = berandaAdapter
         }
-
-//        rf_main.setOnRefreshListener {
-//            rf_main.isRefreshing = false
-//            berandaViewModel.refresh()
-//            rv_main.invisible()
-//            progress_bar.visible()
-//        }
-
     }
 
     private fun initMovingPager() {

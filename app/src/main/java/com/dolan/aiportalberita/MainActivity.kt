@@ -44,4 +44,12 @@ class MainActivity : AppCompatActivity() {
     fun hideNavigation() {
         nav_bot.invisible()
     }
+
+    fun hideToolbar() {
+        supportActionBar?.hide()
+    }
+
+    fun showToolbar() {
+        supportActionBar?.show()
+    }
 }

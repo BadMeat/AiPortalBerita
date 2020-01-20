@@ -12,9 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dolan.aiportalberita.BaseApp
-import com.dolan.aiportalberita.MainActivity
-import com.dolan.aiportalberita.R
+import com.dolan.aiportalberita.*
 import com.dolan.aiportalberita.viewmodel.TechnologyViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_technology.*
@@ -57,7 +55,8 @@ class TechnologyFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).showNavigation()
+        val mainActivity = (activity as MainActivity)
+        mainActivity.showNavigation()
 
         viewModel.getRemoteList()
         observerNews()
@@ -76,6 +75,16 @@ class TechnologyFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun observerNews() {
         viewModel.getListTechnology().observe(this, Observer {
             adapterTechnology.setListBusiness(it)
+        })
+
+        viewModel.isLoading().observe(this, Observer {
+            if (it) {
+                rv_main.invisible()
+                progress_bar.visible()
+            } else {
+                rv_main.visible()
+                progress_bar.invisible()
+            }
         })
     }
 

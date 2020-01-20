@@ -20,9 +20,7 @@ class BerandaViewModel @Inject constructor(
     private val refreshTime = 5 * 60 * 1000 * 1000 * 1000L
 
     fun refresh() {
-        Log.d("PREFFF", "$pref")
         val refresh = pref.getUpdateTime()
-        Log.d("REFRESH", "$refresh")
         if (refresh != null && refresh != 0L && System.nanoTime() - refresh < refreshTime) {
             fetchFromLocal()
         } else {
@@ -35,7 +33,6 @@ class BerandaViewModel @Inject constructor(
         launch {
             val result = db.favoriteDao().select()
             retrieve(result)
-            Log.d("BERANDAVIEWMODEL", "FETCH FROM LOCAL")
         }
     }
 
@@ -45,17 +42,16 @@ class BerandaViewModel @Inject constructor(
             .doFinally {
                 isLoading.value = false
             }
-            .subscribe {
-                berandaNewsList.value = it
-                saveLocally(it)
-            }
+            .subscribe(
+                { result ->
+                    berandaNewsList.value = result
+                    saveLocally(result)
+                },
+                { onError -> Log.e("ERROR", "$onError") }
+            )
 
-        Log.d("BERANDAVIEWMODEL", "FETCH FROM REMOTE")
         compositeDisposable.add(disposable)
     }
-
-    fun getBerandaNews() = berandaNewsList
-    fun isLoading() = isLoading
 
     private fun saveLocally(articlesItem: List<ArticlesItem>) {
         launch {
@@ -76,5 +72,8 @@ class BerandaViewModel @Inject constructor(
         berandaNewsList.value = articlesItem
         isLoading.value = false
     }
+
+    fun getBerandaNews() = berandaNewsList
+    fun isLoading() = isLoading
 
 }

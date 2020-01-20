@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dolan.aiportalberita.BaseApp
+import com.dolan.aiportalberita.MainActivity
 import com.dolan.aiportalberita.R
 import com.dolan.aiportalberita.viewmodel.TechnologyViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
@@ -24,7 +25,7 @@ class TechnologyFragment : Fragment(), SearchView.OnQueryTextListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: TechnologyViewModel
-    private val adapterTechnology = BusinessAdapter()
+    private lateinit var adapterTechnology: BusinessAdapter
 
     private lateinit var searchView: SearchView
 
@@ -55,8 +56,16 @@ class TechnologyFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as MainActivity).showNavigation()
+
         viewModel.getRemoteList()
         observerNews()
+
+        adapterTechnology = BusinessAdapter {
+
+        }
+
         rv_main.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = adapterTechnology

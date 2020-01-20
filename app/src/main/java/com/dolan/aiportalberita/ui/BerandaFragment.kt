@@ -4,22 +4,20 @@ package com.dolan.aiportalberita.ui
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dolan.aiportalberita.BaseApp
-import com.dolan.aiportalberita.R
-import com.dolan.aiportalberita.invisible
+import com.dolan.aiportalberita.*
 import com.dolan.aiportalberita.viewmodel.BerandaViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
-import com.dolan.aiportalberita.visible
+import kotlinx.android.synthetic.main.beranda_containt.*
 import kotlinx.android.synthetic.main.fragment_beranda.*
-import kotlinx.android.synthetic.main.fragment_beranda.progress_bar
-import kotlinx.android.synthetic.main.fragment_beranda.rv_main
 import java.util.*
 import javax.inject.Inject
 
@@ -31,11 +29,11 @@ class BerandaFragment : Fragment() {
 
     private lateinit var berandaViewModel: BerandaViewModel
     private lateinit var berandaViewPager: BerandaViewPagger
-    private val berandaAdapter = BusinessAdapter()
+    private lateinit var berandaAdapter: BusinessAdapter
 
     private val handler = Handler()
     private lateinit var runnable: Runnable
-    private var timer = Timer()
+    private lateinit var timer: Timer
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,13 +46,15 @@ class BerandaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_beranda, container, false)
+        val contextThemeWrapper = ContextThemeWrapper(activity, R.style.AppTheme_NoAction)
+        val localInflater = inflater.cloneInContext(contextThemeWrapper)
+        return localInflater.inflate(R.layout.fragment_beranda, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as MainActivity).showNavigation()
 
         berandaViewModel.refresh()
         initObserver()
@@ -64,6 +64,11 @@ class BerandaFragment : Fragment() {
         view_pagger.adapter = berandaViewPager
 
         initMovingPager()
+
+        berandaAdapter = BusinessAdapter {
+            val action = BerandaFragmentDirections.actionToDetail(it)
+            Navigation.findNavController(view).navigate(action)
+        }
 
         rv_main.apply {
             layoutManager = LinearLayoutManager(context)
@@ -80,6 +85,9 @@ class BerandaFragment : Fragment() {
     }
 
     private fun initMovingPager() {
+
+        timer = Timer()
+
         runnable = Runnable {
             view_pagger?.let {
                 var i = it.currentItem

@@ -3,7 +3,6 @@ package com.dolan.aiportalberita.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -13,12 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dolan.aiportalberita.BaseApp
-import com.dolan.aiportalberita.R
-import com.dolan.aiportalberita.invisible
+import com.dolan.aiportalberita.*
 import com.dolan.aiportalberita.viewmodel.BusinessListViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
-import com.dolan.aiportalberita.visible
 import kotlinx.android.synthetic.main.fragment_byussines.*
 import javax.inject.Inject
 
@@ -27,7 +23,7 @@ class BusinessFragment : Fragment(), SearchView.OnQueryTextListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val businessAdapter = BusinessAdapter()
+    private lateinit var businessAdapter: BusinessAdapter
 
     private lateinit var businessListViewModel: BusinessListViewModel
 
@@ -60,7 +56,13 @@ class BusinessFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as MainActivity).showNavigation()
+
         businessListViewModel.getBusinessList()
+
+        businessAdapter = BusinessAdapter {
+
+        }
 
         rv_main.apply {
             adapter = businessAdapter
@@ -86,7 +88,6 @@ class BusinessFragment : Fragment(), SearchView.OnQueryTextListener {
         })
         businessListViewModel.getLoading().observe(this, Observer { isLoading ->
             isLoading.let {
-                Log.d("ISLOADING", "$it")
                 progress_bar.visibility = if (it) View.VISIBLE else View.GONE
                 if (it) {
                     rv_main.invisible()

@@ -28,6 +28,9 @@ android {
         }
     }
     dataBinding.enabled = true
+    androidExtensions {
+        experimental = true
+    }
 }
 
 def lifecycle_version = "1.1.1"

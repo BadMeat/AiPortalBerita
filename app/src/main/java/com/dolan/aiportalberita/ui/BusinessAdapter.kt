@@ -1,6 +1,5 @@
 package com.dolan.aiportalberita.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dolan.aiportalberita.R
 import com.dolan.aiportalberita.databinding.BusinessItemBinding
 import com.dolan.aiportalberita.model.ArticlesItem
-import kotlinx.android.synthetic.main.business_item.view.*
 
 /**
  * Created by Bencoleng on 30/12/2019.
  */
-class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>(), Filterable,
+class BusinessAdapter(private val listener: (ArticlesItem) -> Unit) :
+    RecyclerView.Adapter<BusinessAdapter.Holder>(), Filterable,
     NewsDetailListener {
 
     private val listBusiness = mutableListOf<ArticlesItem>()
@@ -67,19 +66,31 @@ class BusinessAdapter : RecyclerView.Adapter<BusinessAdapter.Holder>(), Filterab
             parent,
             false
         )
-        return Holder(view)
+        return Holder(view, listener)
     }
 
     override fun getItemCount() = listNewsFilter.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.view.news = listNewsFilter[position]
+        holder.onClick()
         holder.view.listener = this
     }
 
     override fun onClick(view: View) {
-        Log.d("CLICK", "OKE CLICKKKKEED " + view.txt_title.text.toString())
+//        val action = BerandaFragmentDirections.actionToDetail(view.news)
+//        Navigation.findNavController(view).navigate(action)
     }
 
-    class Holder(var view: BusinessItemBinding) : RecyclerView.ViewHolder(view.root)
+    class Holder(var view: BusinessItemBinding, val listener: (ArticlesItem) -> Unit) :
+        RecyclerView.ViewHolder(view.root) {
+
+        fun onClick() {
+            itemView.setOnClickListener {
+                view.news?.let {
+                    listener(it)
+                }
+            }
+        }
+    }
 }

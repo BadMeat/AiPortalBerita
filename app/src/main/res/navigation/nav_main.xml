@@ -9,7 +9,7 @@
         android:id="@+id/byussinesFragment"
         android:name="com.dolan.aiportalberita.ui.BusinessFragment"
         android:label="Business News"
-        tools:layout="@layout/fragment_byussines"/>
+        tools:layout="@layout/fragment_byussines" />
     <fragment
         android:id="@+id/technologyFragment"
         android:name="com.dolan.aiportalberita.ui.TechnologyFragment"
@@ -19,10 +19,23 @@
         android:id="@+id/berandaFragment"
         android:name="com.dolan.aiportalberita.ui.BerandaFragment"
         android:label="fragment_beranda"
-        tools:layout="@layout/fragment_beranda" />
+        tools:layout="@layout/fragment_beranda">
+        <action
+            android:id="@+id/actionToDetail"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.dolan.aiportalberita.ui.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.dolan.aiportalberita.ui.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="article"
+            app:argType="com.dolan.aiportalberita.model.ArticlesItem" />
+    </fragment>
 </navigation>

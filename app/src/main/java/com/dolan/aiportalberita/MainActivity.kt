@@ -5,8 +5,8 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.dolan.aiportalberita.ui.BerandaFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,14 +25,23 @@ class MainActivity : AppCompatActivity() {
 //            supportFragmentManager.findFragmentById(R.id.berandaFragment) as BerandaFragment
 //        fragment.stopTimer()
     }
-//
+
+    //
 //    override fun onSupportNavigateUp(): Boolean {
 //        return NavigationUI.navigateUp(navController, null)
-
+//
 //    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    fun showNavigation() {
+        nav_bot.visible()
+    }
+
+    fun hideNavigation() {
+        nav_bot.invisible()
     }
 }

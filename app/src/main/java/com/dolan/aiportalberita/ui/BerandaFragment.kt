@@ -13,16 +13,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dolan.aiportalberita.*
+import com.dolan.aiportalberita.BaseApp
+import com.dolan.aiportalberita.R
+import com.dolan.aiportalberita.invisible
 import com.dolan.aiportalberita.viewmodel.BerandaViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
+import com.dolan.aiportalberita.visible
+import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.leinardi.android.speeddial.SpeedDialView
 import kotlinx.android.synthetic.main.beranda_containt.*
 import kotlinx.android.synthetic.main.fragment_beranda.*
 import java.util.*
 import javax.inject.Inject
 
 
-class BerandaFragment : Fragment() {
+class BerandaFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     @Inject
     lateinit var factory: ViewModelFactory
@@ -33,7 +38,7 @@ class BerandaFragment : Fragment() {
 
     private val handler = Handler()
     private lateinit var runnable: Runnable
-    private lateinit var timer: Timer
+    private var timer: Timer? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,9 +59,17 @@ class BerandaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mainActivity = (activity as MainActivity)
-        mainActivity.showNavigation()
-        mainActivity.hideToolbar()
+        speed_dial.addActionItem(
+            SpeedDialActionItem.Builder
+                (R.id.byussinesFragment, R.drawable.ic_business).create()
+        )
+
+        speed_dial.addActionItem(
+            SpeedDialActionItem.Builder
+                (R.id.technologyFragment, R.drawable.ic_computer).create()
+        )
+
+        speed_dial.setOnActionSelectedListener(this)
 
         berandaViewModel.refresh()
         initObserver()
@@ -79,7 +92,7 @@ class BerandaFragment : Fragment() {
     }
 
     private fun initMovingPager() {
-
+        timer = null
         timer = Timer()
 
         runnable = Runnable {
@@ -94,7 +107,11 @@ class BerandaFragment : Fragment() {
             }
         }
 
-        timer.schedule(object : TimerTask() {
+        initTimer()
+    }
+
+    private fun initTimer() {
+        timer?.schedule(object : TimerTask() {
             override fun run() {
                 handler.post(runnable)
             }
@@ -122,8 +139,32 @@ class BerandaFragment : Fragment() {
         })
     }
 
-    override fun onStop() {
-        super.onStop()
-        timer.cancel()
+//    override fun onStop() {
+//        super.onStop()
+//        timer?.cancel()
+//    }
+
+    override fun onResume() {
+        super.onResume()
+        timer = null
+        timer = Timer()
+    }
+
+    override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
+        when (actionItem?.id) {
+            R.id.technologyFragment -> {
+                val action = BerandaFragmentDirections.toTech()
+                view?.let {
+                    Navigation.findNavController(it).navigate(action)
+                }
+            }
+            R.id.byussinesFragment -> {
+                val action = BerandaFragmentDirections.toBusiness()
+                view?.let {
+                    Navigation.findNavController(it).navigate(action)
+                }
+            }
+        }
+        return false
     }
 }

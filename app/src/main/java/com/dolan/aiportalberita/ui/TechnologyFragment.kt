@@ -11,10 +11,14 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dolan.aiportalberita.*
+import com.dolan.aiportalberita.BaseApp
+import com.dolan.aiportalberita.R
+import com.dolan.aiportalberita.invisible
 import com.dolan.aiportalberita.viewmodel.TechnologyViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
+import com.dolan.aiportalberita.visible
 import kotlinx.android.synthetic.main.fragment_technology.*
 import javax.inject.Inject
 
@@ -55,19 +59,24 @@ class TechnologyFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mainActivity = (activity as MainActivity)
-        mainActivity.showNavigation()
-
         viewModel.getRemoteList()
         observerNews()
 
         adapterTechnology = BusinessAdapter {
-
+            val action = TechnologyFragmentDirections.toDetail(it)
+            Navigation.findNavController(view).navigate(action)
         }
 
         rv_main.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = adapterTechnology
+        }
+
+        rf_main.setOnRefreshListener {
+            progress_bar.invisible()
+            rv_main.invisible()
+            viewModel.getRemoteList()
+            rf_main.isRefreshing = false
         }
 
     }

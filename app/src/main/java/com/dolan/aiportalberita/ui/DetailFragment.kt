@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.dolan.aiportalberita.BaseApp
-import com.dolan.aiportalberita.MainActivity
 import com.dolan.aiportalberita.R
 import com.dolan.aiportalberita.databinding.FragmentDetailBinding
 import com.dolan.aiportalberita.viewmodel.DetailViewModel
@@ -46,8 +45,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideNavigation()
-
         observerData()
 
         arguments?.let {

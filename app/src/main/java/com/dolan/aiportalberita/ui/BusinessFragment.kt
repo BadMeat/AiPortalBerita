@@ -10,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dolan.aiportalberita.*
+import com.dolan.aiportalberita.BaseApp
+import com.dolan.aiportalberita.R
 import com.dolan.aiportalberita.viewmodel.BusinessListViewModel
 import com.dolan.aiportalberita.viewmodel.ViewModelFactory
+import com.dolan.aiportalberita.visible
 import kotlinx.android.synthetic.main.fragment_byussines.*
 import javax.inject.Inject
 
@@ -52,27 +55,14 @@ class BusinessFragment : Fragment(), SearchView.OnQueryTextListener {
         return inflater.inflate(R.layout.fragment_byussines, container, false)
     }
 
-    private fun drawColorStatusBar() {
-        val window = activity?.window
-        window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        if (Build.VERSION.SDK_INT >= 23) {
-            window?.statusBarColor = resources.getColor(R.color.colorPrimaryDark, null)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
-        (activity as MainActivity).showNavigation()
-
-        drawColorStatusBar()
 
         businessListViewModel.getBusinessList()
 
         businessAdapter = BusinessAdapter {
-
+            val action = BusinessFragmentDirections.toDetail(it)
+            Navigation.findNavController(view).navigate(action)
         }
 
         rv_main.apply {

@@ -9,12 +9,20 @@
         android:id="@+id/byussinesFragment"
         android:name="com.dolan.aiportalberita.ui.BusinessFragment"
         android:label="Business News"
-        tools:layout="@layout/fragment_byussines" />
+        tools:layout="@layout/fragment_byussines" >
+        <action
+            android:id="@+id/toDetail"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/technologyFragment"
         android:name="com.dolan.aiportalberita.ui.TechnologyFragment"
         android:label="Technology News"
-        tools:layout="@layout/fragment_technology" />
+        tools:layout="@layout/fragment_technology" >
+        <action
+            android:id="@+id/toDetail"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/berandaFragment"
         android:name="com.dolan.aiportalberita.ui.BerandaFragment"
@@ -23,6 +31,15 @@
         <action
             android:id="@+id/actionToDetail"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/toBusiness"
+            app:destination="@id/byussinesFragment" />
+        <action
+            android:id="@+id/toTech"
+            app:destination="@id/technologyFragment" />
+        <action
+            android:id="@+id/toFavorite"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"

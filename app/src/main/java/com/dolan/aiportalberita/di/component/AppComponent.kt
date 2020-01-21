@@ -22,4 +22,5 @@ interface AppComponent {
     fun newTechnologyComponent(): TechnologyComponent
     fun newBerandaComponent(): BerandaComponent
     fun newFavoriteComponent(): FavoriteComponent
+    fun detailComponent(): DetailComponent
 }
